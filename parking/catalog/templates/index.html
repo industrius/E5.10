@@ -1,0 +1,116 @@
+{% extends "wrapper.html" %}
+{% block content %}
+  <div class="w-100">
+    <ul class="pl-3">
+      <li>В качестве домашнего задания вам нужно будет развернуть проект, который вы реализовывали в модуле D10. Соответственно необходимо подключить БД postgreSQL и наполнить её какими-нибудь авто.</li>
+      <li>В качестве ответа нужно скинуть публичный ip-адрес или домен, на котором у вас доступен сервер, а также ссылку на репозиторий с проектом, в котором нужно добавить конфигурации для nginx.</li>
+    </ul>
+  </div>
+
+  <form method="GET" name="filter" action="">
+    <div class="row py-3">
+      <div class="col">
+        <select class="custom-select border-secondary" name="manufacturer">
+          {% if manufacturers_selected_item %}
+            <option value="{{ manufacturers_selected_item }}" selected>{{ manufacturers_selected_item }}</option>
+            <option value="" >Не выбран</option>
+          {% else %}
+            <option value="" selected>Производитель</option>
+          {% endif %}
+          {% for manufacturer in manufacturers_list %}
+              <option value="{{ manufacturer }}">{{ manufacturer }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <select class="custom-select border-secondary" name="model">
+          {% if modes_selected_item %}
+            <option value="{{ modes_selected_item }}" selected>{{ modes_selected_item }}</option>
+            <option value="" >Не выбран</option>
+          {% else %}
+            <option value="" selected>Модель</option>
+          {% endif %}
+          {% for model in models_list %}
+              <option value="{{ model }}">{{ model }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <select class="custom-select border-secondary" name="transmission">
+          {% if transmissions_selected_item %}
+            <option value="{{ transmissions_selected_item }}" selected>{{ transmissions_selected_item }}</option>
+            <option value="" >Не выбран</option>
+          {% else %}
+            <option value="" selected>Коробка</option>
+          {% endif %}
+          {% for transmission in transmissions_list %}
+              <option value="{{ transmission }}">{{ transmission }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <select class="custom-select border-secondary" name="issuance">
+          {% if issuances_selected_item %}
+            <option value="{{ issuances_selected_item }}" selected>{{ issuances_selected_item }}</option>
+            <option value="" >Не выбран</option>
+          {% else %}
+            <option value="" selected>Год выпуска</option>
+          {% endif %}
+          {% for issuance in issuances_list %}
+              <option value="{{ issuance }}">{{ issuance }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <select class="custom-select border-secondary" name="color">
+          {% if colors_selected_item %}
+            <option value="{{ colors_selected_item }}" selected>{{ colors_selected_item }}</option>
+            <option value="" >Не выбран</option>
+          {% else %}
+            <option value="" selected>Цвет</option>
+          {% endif %}
+          {% for color in colors_list %}
+              <option value="{{ color }}">{{ color }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-auto">
+        <input class="btn btn-dark" type="submit" value="Фильтр">
+      </div>
+      <div class="col-auto">
+        <a href='/' class="btn btn-dark">Сбросить</a>
+      </div>
+    </div>
+  </form>
+
+
+
+  <div class="table-responsive mt-3">
+    <table class="table table-borderless text-secondary table-hover table-sm table-striped m-0">
+      <thead class="thead-dark text-light">
+        <tr>
+          <th scope="col">Производитель</th>
+          <th scope="col" class="text-center">Модель</th>
+          <th scope="col" class="text-center">Коробка</th>
+          <th scope="col" class="text-center">Год выпуска</th>
+          <th scope="col" class="text-center">Цвет</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for car in car_list %}
+          <tr>
+            <td class="">{{ car.manufacturer }}</td>
+            <td class="text-center">{{ car.model }}</td>
+            <td class="text-center">{{ car.transmission }}</td>
+            <td class="text-center">{{ car.issuance }}</td>
+            <td class="text-center">{{ car.color }}</td>
+          </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+  <span class="badge rounded-0 badge-dark pb-1 col-12 my-3">Общее количество наименований {{ car_list|length }}</span>
+{% endblock %}
